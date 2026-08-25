@@ -10,9 +10,9 @@ export const MovieDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const {data: FetchDetailedInfoCredit} = useFetchDetailedInfoCreditQuery({movie_id: id}  )
-    const {data: FetchDetailedInfo} = useFetchDetailedInfoQuery({movie_id: id })
-    const {data: SimilarMovies} = useSimilarMoviesQuery({movie_id: id })
+    const {data: FetchDetailedInfoCredit} = useFetchDetailedInfoCreditQuery({movie_id: Number(id)}  )
+    const {data: FetchDetailedInfo} = useFetchDetailedInfoQuery({movie_id: Number(id) })
+    const {data: SimilarMovies} = useSimilarMoviesQuery({movie_id: Number(id) })
 
     return (
         <main className={styles.page}>

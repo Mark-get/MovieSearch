@@ -24,6 +24,6 @@ export type MovieListResponse = {
 
 export type ParamsSimilarMovie= {
     movie_id: number,
-    page: number,
-    language: string,
+    page?: number,
+    language?: string,
 }

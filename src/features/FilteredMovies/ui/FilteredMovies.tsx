@@ -4,14 +4,14 @@ import {useFetchMovieFilterQuery} from "@/features/FilteredMovies/api/FilterMovi
 import styles from "./FilteredMovies.module.css";
 import {Link} from "react-router-dom";
 import {IMAGE_BASE_URL} from "@/common/constants/IMAGE_BASE_URL.ts";
-import {useDebounce} from "@/common/components/debouunce/useDebounce.ts";
+import type {SortBy} from "@/features/FilteredMovies/api/FilterMovieType.ts";
 
 export const FilteredMovies = () => {
     const [page, setPage] = useState(1);
-    const [sort, setSort] = useState("vote_average.desc");
+    const [sort, setSort] = useState<SortBy>("vote_average.desc");
     const [minRating, setMinRating] = useState(7.0);
     const { data } = useFetchMovieFilterQuery({sort_by: sort, "vote_average.gte": minRating, page});
-    const debouncedSearchTerm = useDebounce(sort, 500);
+    //const debouncedSearchTerm = useDebounce(sort, 500);
     //finish with debounce!!!!!!!
     return (
         <main className={styles.page}>

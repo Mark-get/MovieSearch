@@ -22,7 +22,7 @@ export type MoviesResponse = {
     total_results: number;
 };
 
-type SortBy =
+export type SortBy =
     | "popularity.asc" | "popularity.desc"
     | "release_date.asc" | "release_date.desc"
     | "revenue.asc" | "revenue.desc"
