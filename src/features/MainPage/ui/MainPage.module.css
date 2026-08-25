@@ -1,0 +1,75 @@
+.page {
+  width: min(100% - 32px, 1200px);
+  margin: 0 auto;
+  padding: 32px 0;
+}
+
+.movieSection {
+  margin-top: 32px;
+}
+
+.sectionTitle {
+  margin: 0 0 20px;
+  text-align: center;
+}
+
+.movieGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 200px));
+  justify-content: center;
+  gap: 20px 16px;
+}
+
+.movieCard {
+  min-width: 0;
+  text-align: center;
+}
+
+.posterWrapper {
+  position: relative;
+}
+
+.poster {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+}
+
+.rating {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 50%;
+  background: #1d9b4a;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.ratingBad {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 50%;
+  background: red;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+
+.movieTitle {
+  margin: 8px 0 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+}

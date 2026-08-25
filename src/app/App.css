@@ -1,0 +1,14 @@
+.light,
+.dark {
+    min-height: 100vh;
+}
+
+.light {
+    color: #222;
+    background-color: #fff;
+}
+
+.dark {
+    color: #fff;
+    background-color: #000;
+}
