@@ -9,9 +9,10 @@ import {
 
 import {useLazyFetchAllMoviesQuery} from "@/common/components/MovieSearch/api/Search.ts";
 import type {SearchMovie} from "@/common/components/MovieSearch/api/types/Search.ts";
-import {IMAGE_BASE_URL} from "@/common/constants/IMAGE_BASE_URL.ts";
 import styles from "./MovieSearch.module.css";
-import {Link} from "react-router-dom";
+import {MovieCard} from "@/common/components/MovieCard/MovieCard.tsx";
+import {LinearProgress} from "@mui/material";
+import {MovieCardSkeleton} from "@/common/components/MovieCard/MovieCardSkeleton.tsx";
 
 export const MovieSearch = () => {
     const [searchValue, setSearchValue] = useState("")
@@ -87,34 +88,28 @@ export const MovieSearch = () => {
             {!submittedSearch && <p className={styles.message}>Enter a movie title to start searching.</p>}
             {isError && <p className={`${styles.message} ${styles.error}`}>Something went wrong. Please try again.</p>}
             {submittedSearch && !isFetching && movies.length === 0 && <p className={styles.message}>No matches for: “{submittedSearch}”.</p>}
+            {isFetching && movies.length > 0 && <LinearProgress/>}
+
+            {isFetching && movies.length === 0 && (
+                <div className={styles.movieGrid}>
+                    {Array.from({length: 5}, (_, index) => <MovieCardSkeleton key={index}/>)}
+                </div>
+            )}
 
             {movies.length > 0 && (
                 <section className={styles.results}>
                     <h2>Results for “{submittedSearch}”</h2>
                     <div className={styles.movieGrid}>
                         {movies.map((movie) => (
-                            <article className={styles.movieCard} key={movie.id}>
-                                <div className={styles.posterWrapper}>
-                                    <Link to={`/movie/${movie.id}`}>
-                                        <img className={styles.poster} src={`${IMAGE_BASE_URL}${movie.poster_path}`} alt={movie.title}/>
-                                    </Link>
-                                    <span className={movie.vote_average >= 7 ? styles.rating : styles.ratingBad}>
-                                        {movie.vote_average.toFixed(1)}
-                                    </span>
-                                </div>
-                                <h3 className={styles.movieTitle}>{movie.title}</h3>
-                                <p className={styles.releaseYear}>{movie.release_date?.slice(0, 4) || "Release date unavailable"}</p>
-                            </article>
+                            <MovieCard movie={movie}/>
                         ))}
                     </div>
                     <div className={styles.loadMore} ref={loadMoreRef}>
-                        {isFetching && "Loading more movies..."}
                         {!isFetching && page >= totalPages && "You have reached the end of the results."}
                     </div>
                 </section>
             )}
 
-            {isFetching && movies.length === 0 && <p className={styles.message}>Loading movies...</p>}
         </main>
     );
 };

@@ -1,0 +1,6 @@
+.background {
+    position: relative;
+    left: 50%;
+    width: 100vw;
+    margin-left: -50vw;
+}

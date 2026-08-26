@@ -11,7 +11,6 @@ export const baseApi = createApi({
                 'Authorization',
                 `Bearer ${import.meta.env.VITE_READ_ACCESS_TOKEN}`
             )
-
             return headers
         },
     }),

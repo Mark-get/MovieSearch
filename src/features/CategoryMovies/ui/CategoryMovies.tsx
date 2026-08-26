@@ -1,6 +1,4 @@
 import {useState} from "react";
-import {Link} from "react-router-dom";
-import {IMAGE_BASE_URL} from "@/common/constants/IMAGE_BASE_URL.ts";
 import {
     useFetchNowPlayingMoviesQuery,
     useFetchPopularMoviesQuery,
@@ -8,6 +6,9 @@ import {
     useFetchUpcomingMoviesQuery,
 } from "@/features/MainPage/api/MoviesApi.ts";
 import styles from "./CategoryMovies.module.css";
+import {MovieCard} from "@/common/components/MovieCard/MovieCard.tsx";
+import {LinearProgress} from "@mui/material";
+import {MovieCardSkeleton} from "@/common/components/MovieCard/MovieCardSkeleton.tsx";
 
 const categories = [
     {id: "popular", label: "Popular movies"},
@@ -76,26 +77,13 @@ export const CategoryMovies = () => {
             <section className={styles.movieSection} aria-labelledby="category-title">
                 <h1 className={styles.sectionTitle} id="category-title">{activeLabel}</h1>
 
-                {activeQuery.isLoading && <p className={styles.status}>Loading movies...</p>}
+                {activeQuery.isFetching && activeQuery.data && <LinearProgress/>}
                 {activeQuery.isError && <p className={styles.status}>Unable to load movies.</p>}
 
                 <div className={styles.movieGrid}>
+                    {activeQuery.isLoading && Array.from({length: 20}, (_, index) => <MovieCardSkeleton key={index}/>)}
                     {activeQuery.data?.results.slice(0, 20).map((movie) => (
-                        <article className={styles.movieCard} key={movie.id}>
-                            <div className={styles.posterWrapper}>
-                                <Link to={`/movie/${movie.id}`}>
-                                    <img
-                                        alt={movie.title}
-                                        className={styles.poster}
-                                        src={`${IMAGE_BASE_URL}${movie.poster_path}`}
-                                    />
-                                </Link>
-                                <span className={movie.vote_average >= 7 ? styles.ratingGood : styles.ratingBad}>
-                                    {movie.vote_average.toFixed(1)}
-                                </span>
-                            </div>
-                            <h2 className={styles.movieTitle}>{movie.title}</h2>
-                        </article>
+                        <MovieCard movie={movie}/>
                     ))}
                 </div>
 

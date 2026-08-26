@@ -1,16 +1,16 @@
-import {MenuItem, Pagination, Select, Slider} from "@mui/material";
+import {LinearProgress, MenuItem, Pagination, Select, Slider} from "@mui/material";
 import {useState} from "react";
 import {useFetchMovieFilterQuery} from "@/features/FilteredMovies/api/FilterMovies.ts";
 import styles from "./FilteredMovies.module.css";
-import {Link} from "react-router-dom";
-import {IMAGE_BASE_URL} from "@/common/constants/IMAGE_BASE_URL.ts";
 import type {SortBy} from "@/features/FilteredMovies/api/FilterMovieType.ts";
+import {MovieCard} from "@/common/components/MovieCard/MovieCard.tsx";
+import {MovieCardSkeleton} from "@/common/components/MovieCard/MovieCardSkeleton.tsx";
 
 export const FilteredMovies = () => {
     const [page, setPage] = useState(1);
     const [sort, setSort] = useState<SortBy>("vote_average.desc");
     const [minRating, setMinRating] = useState(7.0);
-    const { data } = useFetchMovieFilterQuery({sort_by: sort, "vote_average.gte": minRating, page});
+    const {data, isFetching} = useFetchMovieFilterQuery({sort_by: sort, "vote_average.gte": minRating, page});
     //const debouncedSearchTerm = useDebounce(sort, 500);
     //finish with debounce!!!!!!!
     return (
@@ -52,19 +52,11 @@ export const FilteredMovies = () => {
 
             <section className={styles.results}>
                 <h2>Movies</h2>
+                {isFetching && data && <LinearProgress/>}
                 <div className={styles.movieGrid}>
+                    {isFetching && !data && Array.from({length: 20}, (_, index) => <MovieCardSkeleton key={index}/>)}
                     {data?.results.slice(0, 20).map((movie) => (
-                        <article className={styles.movieCard} key={movie.id}>
-                            <div className={styles.posterWrapper}>
-                                <Link to={`/movie/${movie.id}`}>
-                                    <img className={styles.poster} src={`${IMAGE_BASE_URL}${movie.poster_path}`} alt={movie.title}/>
-                                </Link>
-                                <span className={movie.vote_average >= 7 ? styles.rating : styles.ratingBad}>
-                                    {movie.vote_average.toFixed(1)}
-                                </span>
-                            </div>
-                            <h3 className={styles.movieTitle}>{movie.title}</h3>
-                        </article>
+                        <MovieCard movie={movie}/>
                     ))}
                 </div>
                 <Pagination

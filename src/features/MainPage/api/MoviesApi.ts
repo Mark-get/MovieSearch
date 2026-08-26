@@ -1,9 +1,11 @@
 import {baseApi} from "@/app/baseApi.ts";
 import type {MoviesParams, MoviesResponse} from "@/features/MainPage/api/MoviesApi.types.ts";
+import {moviesResponseSchema} from "@/common/components/zodValidation/validation.ts";
 
 export const MoviesApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
         fetchPopularMovies: build.query<MoviesResponse, MoviesParams>({
+            transformResponse: (response: unknown) => moviesResponseSchema.parse(response),
             query: (params) => {
                 return {
                     url: 'movie/popular',
@@ -12,6 +14,7 @@ export const MoviesApi = baseApi.injectEndpoints({
             },
         }),
         fetchTopRatedMovies: build.query<MoviesResponse, MoviesParams>({
+            transformResponse: (response: unknown) => moviesResponseSchema.parse(response),
             query: (params) => {
                 return {
                     url: 'movie/top_rated',
@@ -20,6 +23,7 @@ export const MoviesApi = baseApi.injectEndpoints({
             },
         }),
         fetchUpcomingMovies: build.query<MoviesResponse, MoviesParams>({
+            transformResponse: (response: unknown) => moviesResponseSchema.parse(response),
             query: (params) => {
                 return {
                     url: 'movie/upcoming',
@@ -28,6 +32,7 @@ export const MoviesApi = baseApi.injectEndpoints({
             },
         }),
         fetchNowPlayingMovies: build.query<MoviesResponse, MoviesParams>({
+            transformResponse: (response: unknown) => moviesResponseSchema.parse(response),
             query: (params) => {
                 return {
                     url: 'movie/now_playing',

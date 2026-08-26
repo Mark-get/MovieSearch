@@ -1,0 +1,1 @@
+export const placeholderFilm = "https://placehold.co/600x400/000000/FFF"

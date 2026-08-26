@@ -3,6 +3,7 @@ import {Routing} from "@/common/routing/Routing.tsx";
 import {useAppSelector} from "@/common/hooks";
 import {selectThemeMode} from "@/app/app-slice.ts";
 import "./App.css"
+import {Footer} from "@/common/components/Footer/Footer.tsx";
 
 function App() {
     const themeMode = useAppSelector(selectThemeMode)
@@ -10,6 +11,7 @@ function App() {
     <div className={themeMode}>
         <Header/>
         <Routing />
+        <Footer/>
     </div>
   )
 }
