@@ -13,7 +13,7 @@ export const NowPlayingMovies = () => {
                 </h2>
                 <div className={styles.movieGrid}>
                     {isLoading && Array.from({length: 5}, (_, index) => <MovieCardSkeleton key={index}/>)}
-                    {NowPlayingMovies?.results.slice(0,5).map((movie) => {
+                    {NowPlayingMovies?.results.slice(0,6).map((movie) => {
                         return (
                             <MovieCard movie={movie}/>
                         )

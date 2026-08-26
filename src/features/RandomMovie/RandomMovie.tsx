@@ -9,6 +9,7 @@ export const RandomMovie = () => {
 
     const randomMovie =
         movies[Math.floor(Math.random() * movies.length)]
+
     return (
         <>
             <div

@@ -14,11 +14,8 @@ export const PopularMoviesPage = () => {
                 <h2 className={styles.sectionTitle}>Popular movies</h2>
                 <div className={styles.movieGrid}>
                     {isLoading && Array.from({length: 5}, (_, index) => <MovieCardSkeleton key={index}/>)}
-                    {popularMovies?.results.slice(0,5).map((movie) => {
-
-
+                    {popularMovies?.results.slice(0,6).map((movie) => {
                         return (
-
                             <MovieCard movie={movie}/>
                         )
                     })}

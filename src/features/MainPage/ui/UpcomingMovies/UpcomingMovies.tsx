@@ -14,7 +14,7 @@ export const UpcomingMovies = () => {
                 <h2 className={styles.sectionTitle}>Upcoming Movies</h2>
                 <div className={styles.movieGrid}>
                     {isLoading && Array.from({length: 5}, (_, index) => <MovieCardSkeleton key={index}/>)}
-                    {UpcomingMovies?.results.slice(0,5).map((movie) => {
+                    {UpcomingMovies?.results.slice(0,6).map((movie) => {
                         return (
                             <MovieCard movie={movie}/>
                         )

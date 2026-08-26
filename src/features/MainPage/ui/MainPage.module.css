@@ -21,7 +21,7 @@
 
 .movieGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 200px));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 180px));
   justify-content: center;
   gap: 20px 16px;
 }
