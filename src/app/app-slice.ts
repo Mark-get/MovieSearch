@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
+
 const appSlice = createSlice({
     name: 'app',
     initialState:  {
-        themeMode: "light" as ThemeMode
+        themeMode:"dark" as ThemeMode
     },
     selectors: {
         selectThemeMode: (state) => state.themeMode

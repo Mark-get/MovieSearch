@@ -37,7 +37,7 @@ export const Header = () => {
                 </ul>
 
             </nav>
-            <Switch color={"default"} onChange={changeMode} />
+            <Switch color={"default"} onChange={changeMode}/>
         </header>
     )
 }
