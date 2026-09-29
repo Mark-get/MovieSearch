@@ -55,7 +55,9 @@ const genreSchema = z.object({
     id: z.number(),
     name: z.string(),
 });
-
+export const genresResponseSchema = z.object({
+    genres: z.array(genreSchema),
+});
 const productionCompanySchema = z.object({
     id: z.number(),
     logo_path: z.string().nullable(),

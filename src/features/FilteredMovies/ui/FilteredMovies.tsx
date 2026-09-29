@@ -1,6 +1,6 @@
 import {LinearProgress, MenuItem, Pagination, Select, Slider} from "@mui/material";
 import {useState} from "react";
-import {useFetchMovieFilterQuery} from "@/features/FilteredMovies/api/FilterMovies.ts";
+import {useFetchMovieByGenreQuery, useFetchMovieFilterQuery} from "@/features/FilteredMovies/api/FilterMovies.ts";
 import styles from "./FilteredMovies.module.css";
 import type {SortBy} from "@/features/FilteredMovies/api/FilterMovieType.ts";
 import {MovieCard} from "@/common/components/MovieCard/MovieCard.tsx";
@@ -10,9 +10,9 @@ export const FilteredMovies = () => {
     const [page, setPage] = useState(1);
     const [sort, setSort] = useState<SortBy>("vote_average.desc");
     const [minRating, setMinRating] = useState(7.0);
-    const {data, isFetching} = useFetchMovieFilterQuery({sort_by: sort, "vote_average.gte": minRating, page});
-    //const debouncedSearchTerm = useDebounce(sort, 500);
-    //finish with debounce!!!!!!!
+    const [genre, setGenre] = useState<number | "">("");
+    const {data:MovieFilterQuery, isFetching} = useFetchMovieFilterQuery({sort_by: sort, "vote_average.gte": minRating, page, with_genres: genre});
+    const {data:MovieByGenre} = useFetchMovieByGenreQuery();
     return (
         <main className={styles.page}>
             <aside className={styles.filters}>
@@ -47,22 +47,32 @@ export const FilteredMovies = () => {
                         step={0.1}
                         valueLabelDisplay="auto"
                     />
+                    <Select  value={genre}
+                             onChange={(e) => setGenre(Number(e.target.value))}
+                    >
+                        {MovieByGenre?.genres.map((genre) => (
+                            <MenuItem key={genre.id} value={genre.id}>
+                                {genre.name}
+                            </MenuItem>
+                        ))}
+                    </Select>
+
                 </div>
             </aside>
 
             <section className={styles.results}>
                 <h2>Movies</h2>
-                {isFetching && data && <LinearProgress/>}
+                {isFetching && MovieFilterQuery && <LinearProgress/>}
                 <div className={styles.movieGrid}>
-                    {isFetching && !data && Array.from({length: 20}, (_, index) => <MovieCardSkeleton key={index}/>)}
-                    {data?.results.slice(0, 20).map((movie) => (
+                    {isFetching && !MovieFilterQuery && Array.from({length: 20}, (_, index) => <MovieCardSkeleton key={index}/>)}
+                    {MovieFilterQuery?.results.slice(0, 20).map((movie) => (
                         <MovieCard movie={movie}/>
                     ))}
                 </div>
                 <Pagination
                     className={styles.pagination}
                     page={page}
-                    count={data?.total_pages ?? 1}
+                    count={MovieFilterQuery?.total_pages ?? 1}
                     onChange={(_, selectedPage) => {
                         setPage(selectedPage);
                     }}
