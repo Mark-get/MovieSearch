@@ -10,8 +10,8 @@ export const FilteredMovies = () => {
     const [page, setPage] = useState(1);
     const [sort, setSort] = useState<SortBy>("vote_average.desc");
     const [minRating, setMinRating] = useState(7.0);
-    const [genre, setGenre] = useState<number | "">("");
-    const {data:MovieFilterQuery, isFetching} = useFetchMovieFilterQuery({sort_by: sort, "vote_average.gte": minRating, page, with_genres: genre});
+    const [genre, setGenre] = useState<number | string>("");
+    const {data:MovieFilterQuery, isFetching} = useFetchMovieFilterQuery({sort_by: sort, "vote_average.gte": minRating, page, with_genres: genre === "" ? undefined : String(genre),});
     const {data:MovieByGenre} = useFetchMovieByGenreQuery();
     return (
         <main className={styles.page}>
